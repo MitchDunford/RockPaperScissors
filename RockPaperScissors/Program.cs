@@ -9,12 +9,31 @@ class Program
         var random
             = new Random();
 
+        Move? previousUserMove = null;
+
         while (true)
         {
             Console.Clear();
 
             Console.WriteLine(
                 "Welcome to Rock Paper Scissors!");
+
+            string? opponent = null;
+
+            if (previousUserMove is not null)
+            {
+                Console.WriteLine(
+                    "Choose your opponent: ");
+
+                Console.WriteLine(
+                    "[1] RANDOM BOT | [2] COPY BOT");
+
+                opponent
+                    = Console.ReadLine();
+            }           
+
+            var isCopyBot
+                = opponent == "2";
 
             Console.WriteLine(
                 "[1] ROCK | [2] PAPER | [3] SCISSORS");
@@ -31,8 +50,18 @@ class Program
             var userMove
                 = (Move)moveInt;
 
-            var computerMove
-                = (Move)random.Next(1, 4);
+            Move computerMove;
+
+            if (isCopyBot)
+            {
+                computerMove
+                    = previousUserMove ?? userMove;
+            }
+            else
+            {
+                computerMove
+                    = (Move)random.Next(1, 4);
+            }
 
             var outcome
                 = GameRules.GetResult(
@@ -66,6 +95,9 @@ class Program
                         "It's a draw!");
                     break;
             }
+
+            previousUserMove
+                = userMove;
 
             Console.WriteLine(
                 "Play Again? (y/n)");
