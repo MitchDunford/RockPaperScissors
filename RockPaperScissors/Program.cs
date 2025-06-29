@@ -10,6 +10,9 @@ class Program
             = new Random();
 
         Move? previousUserMove = null;
+        
+        var gameStats
+            = new GameStats();
 
         while (true)
         {
@@ -18,10 +21,14 @@ class Program
             Console.WriteLine(
                 "Welcome to Rock Paper Scissors!");
 
+            gameStats
+                .PrintStats();
+
             string? opponent = null;
 
             if (previousUserMove is not null)
             {
+                Console.WriteLine();
                 Console.WriteLine(
                     "Choose your opponent: ");
 
@@ -34,7 +41,8 @@ class Program
 
             var isCopyBot
                 = opponent == "2";
-
+            
+            Console.WriteLine();
             Console.WriteLine(
                 "Choose your game mode: ");
 
@@ -44,6 +52,10 @@ class Program
             Enum.TryParse(
                 Console.ReadLine(),
                 out GameMode gameMode);
+
+            Console.WriteLine();
+            Console.WriteLine(
+                "Enter your move: ");
 
             if (gameMode == GameMode.BigBangTheory)
             {
@@ -55,9 +67,6 @@ class Program
                 Console.WriteLine(
                     "[1] ROCK | [2] PAPER | [3] SCISSORS");
             }
-
-            Console.WriteLine(
-                "Enter your move: ");
 
             var input
                 = Console.ReadLine();
@@ -86,7 +95,7 @@ class Program
                         = (Move)random.Next(1, 6);
                 }
                 else
-                { 
+                {
                     computerMove
                         = (Move)random.Next(1, 4);
                 }
@@ -97,9 +106,11 @@ class Program
                     userMove,
                     computerMove);
 
+            Console.WriteLine();
             Console.WriteLine(
                 $"You played {userMove}");
 
+            Console.WriteLine();
             Console.WriteLine(
                 "Your opponent is thinking...");
 
@@ -109,6 +120,7 @@ class Program
             Console.WriteLine(
                 $"Your opponent played {computerMove}");
 
+            Console.WriteLine();
             switch (outcome)
             {
                 case Outcome.Win:
@@ -128,6 +140,11 @@ class Program
             previousUserMove
                 = userMove;
 
+            gameStats
+                .Update(
+                    outcome);
+
+            Console.WriteLine();
             Console.WriteLine(
                 "Play Again? (y/n)");
 
