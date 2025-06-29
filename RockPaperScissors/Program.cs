@@ -30,13 +30,31 @@ class Program
 
                 opponent
                     = Console.ReadLine();
-            }           
+            }
 
             var isCopyBot
                 = opponent == "2";
 
             Console.WriteLine(
-                "[1] ROCK | [2] PAPER | [3] SCISSORS");
+                "Choose your game mode: ");
+
+            Console.WriteLine(
+                "[1] CLASSIC | [2] BIG BANG THEORY");
+
+            Enum.TryParse(
+                Console.ReadLine(),
+                out GameMode gameMode);
+
+            if (gameMode == GameMode.BigBangTheory)
+            {
+                Console.WriteLine(
+                    "[1] ROCK | [2] PAPER | [3] SCISSORS | [4] LIZARD | [5] SPOCK");
+            }
+            else
+            {
+                Console.WriteLine(
+                    "[1] ROCK | [2] PAPER | [3] SCISSORS");
+            }
 
             Console.WriteLine(
                 "Enter your move: ");
@@ -44,7 +62,10 @@ class Program
             var input
                 = Console.ReadLine();
 
-            if (!int.TryParse(input, out int moveInt) || moveInt < 1 || moveInt > 3)
+            var maxMove
+                = gameMode == GameMode.BigBangTheory ? 5 : 3;
+
+            if (!int.TryParse(input, out int moveInt) || moveInt < 1 || moveInt > maxMove)
                 continue;
 
             var userMove
@@ -59,8 +80,16 @@ class Program
             }
             else
             {
-                computerMove
-                    = (Move)random.Next(1, 4);
+                if (gameMode == GameMode.BigBangTheory)
+                {
+                    computerMove
+                        = (Move)random.Next(1, 6);
+                }
+                else
+                { 
+                    computerMove
+                        = (Move)random.Next(1, 4);
+                }
             }
 
             var outcome
