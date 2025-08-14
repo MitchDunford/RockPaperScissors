@@ -2,7 +2,7 @@
 
 Using a language of your choice please create a program which allows the user to play Rock, Paper, Scissors against a computer which makes random choices for their Turn.
 
-Please put this into a git repository and provide the URL to OEM, we may talk about this code during your interview.
+Please put this into a git repository.
 
 We expect you to spend no longer than 2 hours on this task.
 
